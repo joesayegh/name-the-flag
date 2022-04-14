@@ -96,8 +96,47 @@ window.onload = function () {
 	const isoFlagsRow = document.getElementById('iso-flags');
 	loadJSON('country.json', (response) => {
 		const countries = JSON.parse(response);
+
+		// SHOW ALL COUNTRIES
 		for (country of countries) {
 			addFlag(country, isoFlagsRow);
+			// console.log(JSON.stringify(country, null, 4));
 		}
+
+		// // FILTER ON EUROPE
+		// for (country of countries.filter((obj) => obj.continent == 'Europe')) {
+		// 	addFlag(country, isoFlagsRow);
+		// 	console.log(JSON.stringify(country, null, 4));
+		// }
+
+		// // FILTER ON ASIA
+		// for (country of countries.filter((obj) => obj.continent == 'Asia')) {
+		// 	addFlag(country, isoFlagsRow);
+		// 	console.log(JSON.stringify(country, null, 4));
+		// }
+
+		// // FILTER ON NORTH AMERICA
+		// for (country of countries.filter((obj) => obj.continent == 'North America')) {
+		// 	addFlag(country, isoFlagsRow);
+		// 	console.log(JSON.stringify(country, null, 4));
+		// }
+
+		// // FILTER ON SOUTH AMERICA
+		// for (country of countries.filter((obj) => obj.continent == 'South America')) {
+		// 	addFlag(country, isoFlagsRow);
+		// 	console.log(JSON.stringify(country, null, 4));
+		// }
+
+		// // FILTER ON AFRICA
+		// for (country of countries.filter((obj) => obj.continent == 'Africa')) {
+		// 	addFlag(country, isoFlagsRow);
+		// 	console.log(JSON.stringify(country, null, 4));
+		// }
+
+		// // FILTER ON OCEANIA
+		// for (country of countries.filter((obj) => obj.continent == 'Oceania')) {
+		// 	addFlag(country, isoFlagsRow);
+		// 	console.log(JSON.stringify(country, null, 4));
+		// }
 	});
 };
