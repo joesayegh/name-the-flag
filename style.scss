@@ -35,6 +35,8 @@ body {
 		border-color: transparent;
 		background-color: transparent;
 		cursor: pointer;
+		// REMOVE GAP UNDER BUTTON
+		display: block;
 	}
 
 	&-img {
