@@ -6,7 +6,27 @@
 	// outline: 1px solid red;
 }
 
+// CSS VARIABLES
+:root {
+	--blue: #14233c;
+	--grey: #aab2c0;
+	--white: #fff;
+
+	--text: var(--blue);
+	--bg: var(--white);
+
+	@media (prefers-color-scheme: dark) {
+		--text: var(--white);
+		--bg: var(--blue);
+	}
+}
+
 // BASIC STYLING
+body {
+	background-color: var(--bg);
+	color: var(--white);
+}
+
 .flag {
 	// THE IMAGE IS WRAPPED IN A BUTTON TO MAKE IT ACCESIBLE
 	&-btn {
@@ -14,6 +34,7 @@
 		border-width: 0;
 		border-color: transparent;
 		background-color: transparent;
+		cursor: pointer;
 	}
 
 	&-img {
