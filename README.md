@@ -15,5 +15,6 @@ It's Vanilla JS with zero dependancies.
 
 ## Credits
 
+* Huge thank you to [Lipis](https://github.com/lipis) for the [flag-icons](https://github.com/lipis/flag-icons) repository which this is based on.
 * This project wouldn't exist without the awesome and now deleted collection of SVG flags by [koppi](https://github.com/koppi).
 * Thank you [Andrejs Abrickis](https://twitter.com/andrejsabrickis) for providing the `flag-icons` name on [npm](https://www.npmjs.com/package/flag-icons).
