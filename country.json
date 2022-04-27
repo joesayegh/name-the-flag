@@ -187,7 +187,7 @@
 		"code": "BS",
 		"flag": "flags/bs.svg",
 		"iso": true,
-		"name": "Bahamas",
+		"name": "The Bahamas",
 		"capital": "Nassau",
 		"continent": "North America"
 	},
@@ -547,7 +547,7 @@
 		"code": "GM",
 		"flag": "flags/gm.svg",
 		"iso": true,
-		"name": "Gambia",
+		"name": "The Gambia",
 		"capital": "Banjul",
 		"continent": "Africa"
 	},
