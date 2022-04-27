@@ -1,142 +1,49 @@
-// LOAD JSON FILE
-const loadJSON = (path, callback) => {
-	var xobj = new XMLHttpRequest();
-	xobj.overrideMimeType('application/json');
-	xobj.open('GET', path, true);
-	xobj.onreadystatechange = function () {
-		if (xobj.readyState == 4 && xobj.status == '200') {
-			callback(xobj.responseText);
-		}
-	};
-	xobj.send(null);
-};
+// PATH TO THE JSON FILE
+url = 'country.json';
 
-const addFlag = (country, rowDiv) => {
-	// CREATE A DIV
-	const parentDiv = document.createElement('div');
-	// ASSIGN THE COUNTRY CODE AS AN ID TO THE DIV
-	parentDiv.id = country.code;
+// PATH TO WHERE YOU WANT THE JSON DATA TO APPEAR
+let placeholder = document.querySelector('#iso-flags');
 
-	// CREATE ANOTHER DIV
-	const flagDiv = document.createElement('div');
-	// ASSIGN THE CLASS "FLAG" TO THE DIV
-	flagDiv.classList.add('flag');
-
-	// CODE - CREATE A SPAN
-	const codeSpan = document.createElement('div');
-	// ADD THE CLASS "FLAG-CODE" TO THE SPAN
-	codeSpan.classList.add('flag-code');
-	const code = document.createTextNode('Country Code: ' + country.code);
-	codeSpan.appendChild(code);
-
-	// COUNTRY - CREATE THE FLAG-COUNTRY DIV
-	const countryInfo = document.createElement('div');
-	countryInfo.classList.add('flag-info');
-	// HIDE THE INFO BY DEFAULT
-	countryInfo.classList.add('hide');
-	countryInfo.title = country.name;
-
-	// COUNTRY
-	const countryDiv = document.createElement('div');
-	countryDiv.classList.add('flag-name');
-	const countryName = document.createTextNode('Name: ' + country.name);
-
-	// CAPITAL
-	const capitalDiv = document.createElement('div');
-	capitalDiv.classList.add('flag-capital');
-	const countryCapital = document.createTextNode('Capital: ' + country.capital);
-
-	// CONTINENT
-	const continentDiv = document.createElement('div');
-	continentDiv.classList.add('flag-continent');
-	const countryContinent = document.createTextNode('Continent: ' + country.continent);
-
-	countryDiv.appendChild(countryName);
-	capitalDiv.appendChild(countryCapital);
-	continentDiv.appendChild(countryContinent);
-	countryInfo.appendChild(codeSpan);
-
-	countryInfo.appendChild(countryDiv);
-	countryInfo.appendChild(capitalDiv);
-	countryInfo.appendChild(continentDiv);
-
-	// CREATE THE FLAG IMAGE
-	const flagBtn = document.createElement('button');
-	flagBtn.type = 'button';
-	flagBtn.classList.add('flag-btn');
-
-	const flagImg = document.createElement('img');
-	// ADD THE CLASS FLAG-IMG
-	flagImg.classList.add('flag-img');
-	// RETRIEVE THE IMAGE PATH FROM THE JSON FILE
-	flagImg.src = country.flag;
-	// ADD THE COUNTRY NAME TO THE IMG ALT TAG
-	flagImg.alt = `Flag of ${country.name}`;
-
-	parentDiv.appendChild(flagDiv);
-	flagDiv.appendChild(flagBtn);
-	flagBtn.appendChild(flagImg);
-	flagDiv.appendChild(countryInfo);
-	rowDiv.appendChild(parentDiv);
-
-	// SHOW THE INFO ON CLICK
-	flagImg.addEventListener('click', () => {
-		countryInfo.classList.toggle('hide');
-	});
-
-	// PRESS ENTER ON KEYBOARD
-	flagBtn.addEventListener('keyup', function (event) {
-		if (event.keyCode === 13) {
-			countryInfo.classList.toggle('hide');
-		}
-	});
-};
-
-window.onload = function () {
-	const isoFlagsRow = document.getElementById('iso-flags');
-	loadJSON('country.json', (response) => {
-		const countries = JSON.parse(response);
-
-		// SHOW ALL COUNTRIES
-		for (country of countries) {
-			addFlag(country, isoFlagsRow);
-			// console.log(JSON.stringify(country, null, 4));
+fetch(url)
+	.then(function (response) {
+		return response.json();
+	})
+	.then(function (countries) {
+		let out = '';
+		for (let country of countries) {
+			out += `
+			<div id=${country.code}>
+				<button type="button" class="flag-btn">
+					<img class="flag-img" src="${country.flag}" alt="Flag of ${country.name}" loading="lazy">
+				</button>
+				<div class="flag-info hide" data-country="${country.code}">
+					<div class="flag-code">Country Code: ${country.code}</div>
+					<div class="flag-name">Name: ${country.name}</div>
+					<div class="flag-capital">Capital: ${country.capital}</div>
+					<div class="flag-continent">Continent: ${country.continent}</div>
+				</div>
+			</div>
+		`;
 		}
 
-		// // FILTER ON EUROPE
-		// for (country of countries.filter((obj) => obj.continent == 'Europe')) {
-		// 	addFlag(country, isoFlagsRow);
-		// 	console.log(JSON.stringify(country, null, 4));
-		// }
+		placeholder.innerHTML = out;
 
-		// // FILTER ON ASIA
-		// for (country of countries.filter((obj) => obj.continent == 'Asia')) {
-		// 	addFlag(country, isoFlagsRow);
-		// 	console.log(JSON.stringify(country, null, 4));
-		// }
+		// SELECTORS
+		let flagBtn = document.querySelectorAll('.flag-btn');
 
-		// // FILTER ON NORTH AMERICA
-		// for (country of countries.filter((obj) => obj.continent == 'North America')) {
-		// 	addFlag(country, isoFlagsRow);
-		// 	console.log(JSON.stringify(country, null, 4));
-		// }
+		for (i of flagBtn) {
+			i.addEventListener('click', function () {
+				// console.log(this);
 
-		// // FILTER ON SOUTH AMERICA
-		// for (country of countries.filter((obj) => obj.continent == 'South America')) {
-		// 	addFlag(country, isoFlagsRow);
-		// 	console.log(JSON.stringify(country, null, 4));
-		// }
+				// GET THE ID OF THE PARENT
+				flagId = this.parentElement.id;
+				// console.log(flagId);
 
-		// // FILTER ON AFRICA
-		// for (country of countries.filter((obj) => obj.continent == 'Africa')) {
-		// 	addFlag(country, isoFlagsRow);
-		// 	console.log(JSON.stringify(country, null, 4));
-		// }
+				// TARGET THE DIV WITH THE MATCHING DATA ATTRIBUTE COUNTRY ID
+				let flagInfo = document.querySelector('[data-country=' + flagId);
 
-		// // FILTER ON OCEANIA
-		// for (country of countries.filter((obj) => obj.continent == 'Oceania')) {
-		// 	addFlag(country, isoFlagsRow);
-		// 	console.log(JSON.stringify(country, null, 4));
-		// }
+				// TOGGLE THE HIDE CLASS
+				flagInfo.classList.toggle('hide');
+			});
+		}
 	});
-};
